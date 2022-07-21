@@ -6,7 +6,8 @@ import type { Options } from './interfaces';
 export const htmlPlugin = (options: Options = {}): Plugin => {
   return {
     name: PLUGIN_NAME,
-    async setup(build: PluginBuild): Promise<void> {
+    async setup (build: PluginBuild): Promise<void> {
+
       if (!build.initialOptions.outdir) {
         return;
       }

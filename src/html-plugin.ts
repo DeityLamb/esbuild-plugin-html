@@ -7,7 +7,7 @@ import { TemplateBuilder } from './template-builder';
 
 export class HtmlPlugin {
 
-  constructor(
+  constructor (
     private readonly build: PluginBuild,
     private readonly config: Config
   ) {}

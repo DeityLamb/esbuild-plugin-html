@@ -34,16 +34,26 @@ rules:
   'eqeqeq': [error, always]
 
   'operator-linebreak': [warn, before]
+  'space-before-function-paren': [warn, always]
+  'space-before-blocks': [warn, always]
   'prefer-const': warn
   'arrow-parens': warn
   # default 80
   'max-len': warn
   'indent': [error, 2]
+
+  'keyword-spacing':
+    - warn
+    -
+      before: true
+      after: true
+
   'semi':
     - warn
     - always
     -
       omitLastInOneLineBlock: true
+
   'sort-imports':
     - warn
     -
