@@ -1,26 +1,16 @@
-import { PluginBuild } from 'esbuild';
+import type { PluginBuild } from 'esbuild';
 import { access, readFile } from 'fs/promises';
-import { Options as HtmlMinifierOptions } from "html-minifier-terser";
-import { JSBeautifyOptions } from 'js-beautify';
-import { TemplateOptions } from 'lodash';
+import type { Options as HtmlMinifierOptions } from 'html-minifier-terser';
+import type { JSBeautifyOptions } from 'js-beautify';
+import type { TemplateOptions } from 'lodash';
 import defaults from 'lodash.defaults';
-import { DEFAULT_FILENAME, DEFAULT_TEMPLATE } from './constants';
-import { Config, Options } from './interfaces';
-
-const defaultMinifierOptions: HtmlMinifierOptions = {
-  collapseWhitespace: true,
-  keepClosingSlash: true,
-  removeComments: true,
-  removeRedundantAttributes: true,
-  removeScriptTypeAttributes: true,
-  removeStyleLinkTypeAttributes: true,
-  useShortDoctype: true
-}
-
-const defaultFormatOptions: JSBeautifyOptions = {
-  indent_size: 2,
-  preserve_newlines: false
-}
+import {
+  DEFAULT_FILENAME,
+  DEFAULT_FORMAT_OPTIONS,
+  DEFAULT_MINIFIER_OPTIONS,
+  DEFAULT_TEMPLATE
+} from './constants';
+import type { Config, Options } from './interfaces';
 
 export class PluginConfig implements Config {
 
@@ -32,7 +22,8 @@ export class PluginConfig implements Config {
   public readonly content: TemplateOptions | null;
   public readonly favicon: string;
 
-  private constructor(config: Config) {
+  private constructor (config: Config) {
+
     this.filename = config.filename;
     this.minify = config.minify;
     this.title = config.title;
@@ -62,28 +53,28 @@ export class PluginConfig implements Config {
       template: await this.resolveTemplate(build, config.template),
 
       minify: config.minify === true
-        ? defaultMinifierOptions
+        ? DEFAULT_MINIFIER_OPTIONS
         : config.minify || null,
 
       format: config.format === true
-        ? defaultFormatOptions
+        ? DEFAULT_FORMAT_OPTIONS
         : config.format || null
     });
-  } 
+  }
 
-  private static async resolveTemplate(
+  private static async resolveTemplate (
     build: PluginBuild,
     template: string
   ): Promise<string> {
+
     const isAccess = await access(template)
       .then(() => true)
       .catch(() => false);
 
-    if (!isAccess) {
-      return template;
+    if (isAccess) {
+      return readFile(template, 'utf-8');
     }
 
-    return readFile(template, 'utf-8');
     return template;
   }
 }

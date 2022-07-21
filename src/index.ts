@@ -1,7 +1,7 @@
-import { Plugin, PluginBuild } from 'esbuild';
+import type { Plugin, PluginBuild } from 'esbuild';
 import { PLUGIN_NAME } from './constants';
 import { HtmlPlugin } from './html-plugin';
-import { Options } from './interfaces';
+import type { Options } from './interfaces';
 
 export const htmlPlugin = (options: Options = {}): Plugin => {
   return {
@@ -17,5 +17,5 @@ export const htmlPlugin = (options: Options = {}): Plugin => {
 
       await HtmlPlugin.init(build, options);
     }
-  }
-}
+  };
+};

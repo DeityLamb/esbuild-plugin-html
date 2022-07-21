@@ -1,0 +1,59 @@
+parser: '@typescript-eslint/parser'
+parserOptions:
+  project: tsconfig.json
+  sourceType: module
+
+plugins:
+  - '@typescript-eslint/eslint-plugin'
+  - 'unused-imports'
+  - 'import'
+
+ignorePatterns:
+  - 'dist'
+  - 'node_modules'
+
+extends:
+  - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:import/recommended'
+  - 'plugin:import/typescript'
+
+root: true
+
+env:
+  node: true
+  jest: true
+
+rules:
+  'no-console': error
+  'no-param-reassign': error
+  'no-unneeded-ternary': error
+  'no-return-await': error
+  'no-else-return': error
+  'no-lonely-if': error
+
+  'eqeqeq': [error, always]
+
+  'operator-linebreak': [warn, before]
+  'prefer-const': warn
+  'arrow-parens': warn
+  # default 80
+  'max-len': warn
+  'indent': [error, 2]
+  'semi':
+    - warn
+    - always
+    -
+      omitLastInOneLineBlock: true
+  'sort-imports':
+    - warn
+    -
+      ignoreDeclarationSort: true
+      allowSeparatedGroups: true
+      memberSyntaxSortOrder: [none, all, multiple, single]
+
+  'no-unused-vars': off
+
+  '@typescript-eslint/no-unused-vars': error
+
+  '@typescript-eslint/explicit-function-return-type': warn
+  '@typescript-eslint/no-non-null-assertion': off

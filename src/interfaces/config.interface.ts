@@ -1,6 +1,6 @@
-import { Options as HtmlMinifierOptions } from "html-minifier-terser";
-import { JSBeautifyOptions } from 'js-beautify';
-import { TemplateOptions } from 'lodash';
+import type { Options as HtmlMinifierOptions } from 'html-minifier-terser';
+import type { JSBeautifyOptions } from 'js-beautify';
+import type { TemplateOptions } from 'lodash';
 
 export interface Config {
   filename: string;

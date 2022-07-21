@@ -1,7 +1,9 @@
 import { minify } from 'html-minifier-terser';
 import beautify from 'js-beautify';
-import { DOMWindow, JSDOM } from 'jsdom';
-import { Config } from './interfaces';
+import type { DOMWindow } from 'jsdom';
+import { JSDOM } from 'jsdom';
+import type { Config } from './interfaces';
+import template from 'lodash.template';
 
 export class TemplateBuilder {
 
@@ -18,15 +20,15 @@ export class TemplateBuilder {
   }
 
   public setTitle (title: string): this {
-    
-    this.document.title = title
+
+    this.document.title = title;
     return this;
   }
 
   public appendScript (src: string): this {
 
     const script = this.document.createElement('script');
-    
+
     script.setAttribute('src', src);
     script.setAttribute('type', 'text/javascript');
 
@@ -35,10 +37,10 @@ export class TemplateBuilder {
   }
 
   public appendStyle (href: string): this {
-    
+
     const link = this.document.createElement('link');
 
-    link.setAttribute('type', 'text/css')
+    link.setAttribute('type', 'text/css');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('href', href);
 
@@ -46,10 +48,11 @@ export class TemplateBuilder {
     return this;
   }
 
-  public appendMeta (something?: any): this {
-    
+  // TODO
+  public appendMeta (): this {
+
     const meta = this.document.createElement('meta');
-    
+
     meta.setAttribute('http-equiv', 'X-UA-Compatible');
     meta.setAttribute('content', 'IE=Edge');
 
@@ -59,12 +62,11 @@ export class TemplateBuilder {
 
   public async serialize (): Promise<string> {
 
-    const serialized = this.dom.serialize()
+    const serialized = this.dom.serialize();
 
     const html = this.config.content
-      ? template(serialized)
-      : serialized
-    ;
+      ? template(serialized)(this.config.content)
+      : serialized;
 
     if (this.config.minify) {
       return minify(html, this.config.minify);

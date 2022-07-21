@@ -1,9 +1,12 @@
 {
   "name": "esbuild-html-plugin",
   "version": "0.0.1",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "author": "Alexey Rakityansky",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint src",
+    "lint:fix": "yarn lint --fix",
     "test": "jest --runInBand --verbose --coverage",
     "test:watch": "jest --run-in-band --watch"
   },
@@ -14,8 +17,13 @@
     "@types/jsdom": "^16.2.14",
     "@types/lodash.defaults": "^4.2.7",
     "@types/lodash.template": "^4.5.1",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
     "esbuild": "^0.14.48",
     "esbuild-plugin-clean": "^0.9.0",
+    "eslint": "^8.20.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
     "husky": "^8.0.1",
     "jest": "^28.1.2",
     "normalize.css": "^8.0.1",

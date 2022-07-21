@@ -1,8 +1,8 @@
-import { BuildResult, PluginBuild, Metafile } from 'esbuild';
+import type { BuildResult, Metafile, PluginBuild } from 'esbuild';
 import { writeFile } from 'fs/promises';
 import { extname, relative, resolve } from 'path';
 import { PluginConfig } from './plugin-config';
-import { Options, Config } from './interfaces';
+import type { Config, Options } from './interfaces';
 import { TemplateBuilder } from './template-builder';
 
 export class HtmlPlugin {
@@ -21,18 +21,17 @@ export class HtmlPlugin {
     const plugin = new HtmlPlugin(build, config);
 
     build.onEnd(plugin.onEnd.bind(plugin));
-    build.onStart(plugin.onStart.bind(plugin));
+    // build.onStart(plugin.onStart.bind(plugin));
 
   }
 
-  private onStart (): void { }
+  // private onStart (): void { }
   private async onEnd (result: BuildResult): Promise<void> {
 
-    const template = await this.buildTemplate(result);
+    const template = this.buildTemplate(result);
 
     const html = await template.serialize();
 
-    console.log(html)
     const path = resolve(
       this.build.initialOptions.outdir as string,
       this.config.filename
@@ -40,39 +39,36 @@ export class HtmlPlugin {
     await writeFile(path, html);
   }
 
-  private async buildTemplate(result: BuildResult): Promise<TemplateBuilder> {
+  private buildTemplate (result: BuildResult): TemplateBuilder {
 
     const template = new TemplateBuilder(this.config);
-    const [ jsFiles, cssFiles ] = this.getBuildFiles(result);
+    const [jsFiles, cssFiles] = this.resolveBuildFiles(result);
 
     if (this.config.title) {
       template.setTitle(this.config.title);
     }
 
-    for (const src of jsFiles) {
-      template.appendScript(src);
+    for (const file of jsFiles) {
+      template.appendScript(file);
     }
 
-    for (const src of cssFiles) {
-      template.appendStyle(src);
+    for (const file of cssFiles) {
+      template.appendStyle(file);
     }
 
     return template;
   }
 
-  private getBuildFiles(result: BuildResult): [string[], string[]] {
+  private resolveBuildFiles (result: BuildResult): [string[], string[]] {
 
     const files = Object
       .keys((result.metafile as Metafile).outputs)
-      .map((file) => relative(
-        this.build.initialOptions.outdir as string,
-        file
-      ))
+      .map((file) => relative(this.build.initialOptions.outdir!, file));
 
     return [
       files.filter((file) => extname(file) === '.js'),
       files.filter((file) => extname(file) === '.css')
-    ]
+    ];
   }
 
 }
