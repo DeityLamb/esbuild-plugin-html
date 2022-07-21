@@ -1,0 +1,32 @@
+{
+  "name": "esbuild-html-plugin",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --runInBand --verbose --coverage",
+    "test:watch": "jest --run-in-band --watch"
+  },
+  "devDependencies": {
+    "@types/html-minifier-terser": "^6.1.0",
+    "@types/jest": "^28.1.4",
+    "@types/js-beautify": "^1.13.3",
+    "@types/jsdom": "^16.2.14",
+    "@types/lodash.defaults": "^4.2.7",
+    "@types/lodash.template": "^4.5.1",
+    "esbuild": "^0.14.48",
+    "esbuild-plugin-clean": "^0.9.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.2",
+    "normalize.css": "^8.0.1",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "html-minifier-terser": "^7.0.0-beta.0",
+    "js-beautify": "^1.14.4",
+    "jsdom": "^20.0.0",
+    "lodash.defaults": "^4.2.0",
+    "lodash.template": "^4.5.0"
+  }
+}
