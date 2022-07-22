@@ -42,24 +42,15 @@ rules:
   'max-len': warn
   'indent': [error, 2]
 
-  'keyword-spacing':
-    - warn
-    -
-      before: true
-      after: true
+  'keyword-spacing': [warn, { before: true, after: true }]
 
-  'semi':
-    - warn
-    - always
-    -
-      omitLastInOneLineBlock: true
+  'semi': [warn, always, { omitLastInOneLineBlock: true }]
 
-  'sort-imports':
-    - warn
-    -
-      ignoreDeclarationSort: true
-      allowSeparatedGroups: true
-      memberSyntaxSortOrder: [none, all, multiple, single]
+  'sort-imports': [warn, {
+    ignoreDeclarationSort: true,
+    allowSeparatedGroups: true,
+    memberSyntaxSortOrder: [none, all, multiple, single]
+  }]
 
   'no-unused-vars': off
 
